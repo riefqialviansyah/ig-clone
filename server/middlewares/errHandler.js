@@ -1,9 +1,11 @@
 const errHandler = (err, req, res, next) => {
   switch (err.name) {
-    // daftarin error disini
+    case "SequelizeValidationError":
+    case "SequelizeUniqueConstraintError":
+      res.status(400).json({ message: err.errors[0].message });
+      break;
     case "value":
       break;
-
     default:
       console.log(err.name, "<<<<<< nama error");
       console.log(err);

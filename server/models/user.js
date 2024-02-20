@@ -1,7 +1,6 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
+const { hashPassword } = require("../helpers/hash");
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -16,27 +15,25 @@ module.exports = (sequelize, DataTypes) => {
       User.hasMany(models.Coment, { foreignKey: "userId" });
     }
   }
-  User.init({
-    username: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: {
-        msg: "Username must be unique",
+  User.init(
+    {
+      username: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: {
+          msg: "Username must be unique",
+        },
+        validate: {
+          notNull: {
+            msg: "Username is required",
+          },
+          notEmpty: {
+            msg: "Username is required",
+          },
+        },
       },
-      validate: {
-        notNull: {
-          msg: "Username is required",
-        },
-        notEmpty: {
-          msg: "Username is required",
-        },
-        isUsername: {
-          msg: "Invalid Username format",
-        },
-      },
-    },
-    email: {
-      type: DataTypes.STRING,
+      email: {
+        type: DataTypes.STRING,
         allowNull: false,
         unique: {
           msg: "Email must be unique",
@@ -53,27 +50,29 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
-    password: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: {
-        msg: "Password must be unique",
-      },
-      validate: {
-        notNull: {
-          msg: "Password is required",
+      password: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: {
+          msg: "Password must be unique",
         },
-        notEmpty: {
-          msg: "Password is required",
-        },
-        isPassword: {
-          msg: "Invalid Password format",
+        validate: {
+          notNull: {
+            msg: "Password is required",
+          },
+          notEmpty: {
+            msg: "Password is required",
+          },
         },
       },
     },
-  }, {
-    sequelize,
-    modelName: 'User',
+    {
+      sequelize,
+      modelName: "User",
+    }
+  );
+  User.beforeCreate((user) => {
+    user.password = hashPassword(user.password);
   });
   return User;
 };
