@@ -1,6 +1,6 @@
 const { comparePassword } = require("../helpers/hash");
 const { signToken } = require("../helpers/token");
-const { Post, Like, User, Coment, sequelize } = require("../models/index");
+const {  User, sequelize } = require("../models/index");
 
 class UserController {
   static async register(req, res, next) {
