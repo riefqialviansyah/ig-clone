@@ -1,6 +1,6 @@
 const { comparePassword } = require("../helpers/hash");
 const { signToken } = require("../helpers/token");
-const {  User, sequelize } = require("../models/index");
+const { User, sequelize } = require("../models/index");
 
 class UserController {
   static async register(req, res, next) {
@@ -20,7 +20,7 @@ class UserController {
         throw { name: "EmailRequired" };
       }
       if (!password) {
-        throw { name: "PasswordRequired" };
+        throw { name: "PassRequired" };
       }
       const user = await User.findOne({ where: { email } });
       if (!user) {
