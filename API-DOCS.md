@@ -141,7 +141,7 @@ This endpoint is used to retrieve all posts.
 "updatedAt": "2024-02-21T00:11:32.948Z"
 }];
 ```
-  ## `PATCH` /post/:id/cover-url
+## `PATCH` /post/:id/cover-url
 
 This endpoint is used to update the cover URL of a post by ID.
 
