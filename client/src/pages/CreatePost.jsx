@@ -1,12 +1,10 @@
-
 import { useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { successEvent, waitEvent } from "../helpers/alerts";
 import axios from "axios";
 import "../style/CreatePost.css";
-import { successEvent, waitEvent } from "../helpers/alerts";
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
-
 
 export default function CreatePost() {
   const [photo, setPhoto] = useState("/add-image.png");
@@ -15,7 +13,7 @@ export default function CreatePost() {
   const fileInputRef = useRef();
 
   const navigate = useNavigate();
-  const cancelPost = () => {
+  const backToHome = () => {
     navigate("/");
   };
 
@@ -75,14 +73,14 @@ export default function CreatePost() {
   return (
     <div className="create-post-page">
       <header className="header">
-
-      <img src="/instagram.jpg" alt="Instagram Logo" className="logo" />
-      <button className="nav-icon cancel-button">
-  <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
-    Cancel
-  </Link>
-</button>
-
+        <img src="/instagram.png" alt="Instagram Logo" className="logo" />
+        <button
+          className="nav-icon log-out"
+          onClick={backToHome}
+          style={{ textDecoration: "none", color: "inherit" }}
+        >
+          Back
+        </button>
       </header>
 
       <main className="main-content">
