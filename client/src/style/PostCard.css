@@ -2,12 +2,18 @@
 
 .post-card {
   border: 1px solid #dbdbdb;
-  margin-bottom: 20px;
+  width: 70%;
+  display: flex;
+  margin: 10px auto;
+  border-radius: 10px;
+  justify-content: center;
   background-color: #fff;
 }
 
 .post-image {
-  width: 100%;
+  width: 300px;
+  border-radius: 10px;
+  border: 1px solid black;
   height: auto;
 }
 
@@ -22,7 +28,6 @@
   background: none;
   border: none;
   cursor: pointer;
-
   display: flex;
   align-items: center;
 }

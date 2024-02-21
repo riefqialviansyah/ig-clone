@@ -1,21 +1,50 @@
-import { Link, useNavigate } from "react-router-dom"; // Assuming you use React Router
-import "../style/HomePage.css";
-import { successEvent } from "../helpers/alerts";
-import socket from "../socket";
+import { useEffect, useState } from "react";
 import PostCard from "../components/PostCard";
-<<<<<<< HEAD
 import Navbar from "../components/Navbar";
-=======
->>>>>>> 271a8f6ad7d162d13a60de9b718047397e1b00ba
+import axios from "axios";
+
+// style
+import "../style/HomePage.css";
+
+// socket.io
+import socket from "../socket";
+
+const baseUrl = import.meta.env.VITE_BASE_URL;
 
 export default function HomePage() {
-  const navigate = useNavigate();
+  const [posts, setPosts] = useState(null);
 
-  const handleLogout = () => {
-    localStorage.clear();
-    successEvent("You are logout now");
-    navigate("/login");
+  const fetchPost = async () => {
+    try {
+      const { data } = await axios({
+        method: "get",
+        url: baseUrl + "/post",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        },
+      });
+      setPosts(data);
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+  useEffect(() => {
+    fetchPost();
+    socket.auth = {
+      username: localStorage.username,
+    };
+
+    socket.connect();
+
+    socket.on("post:update", (newPosts) => {
+      setPosts(newPosts);
+    });
+
+    return () => {
+      socket.off("post:update");
+    };
+  }, []);
 
   return (
     <>
@@ -25,13 +54,10 @@ export default function HomePage() {
         </header>
 
         <main className="main-content">
-<<<<<<< HEAD
-          <PostCard
-            post={{ photo: "/add-image.png", description: "makan bang" }}
-          />
-=======
-          <PostCard/>
->>>>>>> 271a8f6ad7d162d13a60de9b718047397e1b00ba
+          {posts &&
+            posts.map((el) => {
+              return <PostCard key={el.id} post={el} />;
+            })}
         </main>
 
         <footer className="footer">{/* Add the footer content here */}</footer>

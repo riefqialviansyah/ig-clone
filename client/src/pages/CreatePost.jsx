@@ -1,6 +1,12 @@
-import { useState, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { successEvent, waitEvent } from "../helpers/alerts";
+import axios from "axios";
+
+// import socket.io
+import socket from "../socket";
+
+// import style
 import "../style/CreatePost.css";
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
@@ -62,6 +68,7 @@ export default function CreatePost() {
         },
       });
 
+      socket.emit("post:info", "Success create post");
       successEvent("Succes create post");
       navigate("/");
     } catch (error) {
@@ -73,10 +80,13 @@ export default function CreatePost() {
     <div className="create-post-page">
       <header className="header">
         <img src="/instagram.png" alt="Instagram Logo" className="logo" />
-        <button className="nav-icon cancel-button">
-          <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
-            Cancel
-          </Link>
+
+        <button
+          onClick={backToHome}
+          className="nav-icon log-out"
+          style={{ textDecoration: "none", color: "inherit" }}
+        >
+          Back
         </button>
       </header>
 

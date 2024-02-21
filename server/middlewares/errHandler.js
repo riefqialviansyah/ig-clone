@@ -10,6 +10,8 @@ const errHandler = (err, req, res, next) => {
     case "PassRequired":
       res.status(400).json({ message: "Password is required" });
       break;
+    case "Invalid User":
+      res.status(401).json({ message: "Invalid username/password" });
     case "InvalidToken":
     case "JsonWebTokenError":
       res.status(401).json({ message: "Invalid Token, Please login first" });

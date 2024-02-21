@@ -2,6 +2,9 @@ import { Link, useNavigate } from "react-router-dom";
 import "../style/Navbar.css";
 import { successEvent } from "../helpers/alerts";
 
+// import socket.io
+import socket from "../socket";
+
 export default function Navbar() {
   const navigate = useNavigate();
 
@@ -9,6 +12,7 @@ export default function Navbar() {
     localStorage.clear();
     successEvent("You are logout now");
     navigate("/login");
+    socket.disconnect();
   };
 
   return (
