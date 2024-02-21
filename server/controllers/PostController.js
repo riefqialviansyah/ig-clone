@@ -3,35 +3,26 @@ const cloudinary = require("../utils/cloudinary");
 
 class PostController {
   static async create(req, res, next) {
-    const { userId, imageUrl, likes, description } = req.body;
+    const userId = req.user.id;
+    const { imageUrl, description } = req.body;
 
     try {
-      const cloudinaryResult = await cloudinary.uploader.upload(imageUrl, {
-        folder: "posts",
-        // width: 300,
-        // crop: 'scale'
-      });
-
-      const { secure_url: cloudinaryImageUrl } = cloudinaryResult;
-
-      const newPost = await Post.create({
+      await Post.create({
         userId,
-        imageUrl: cloudinaryImageUrl,
-        likes,
+        imageUrl,
         description,
       });
 
-      res.status(201).json({ success: true, post: newPost });
+      res.status(201).json({ success: "Success to create post" });
     } catch (error) {
       next(error);
     }
   }
+
   static async showAllPost(req, res, next) {
     try {
       const post = await Post.findAll({});
-      res
-        .status(200)
-        .json({ message: "Success Get Data All Post", data: post });
+      res.status(200).json(post);
     } catch (error) {
       next(error);
     }
@@ -39,15 +30,6 @@ class PostController {
 
   static async updatePostCoverUrlById(req, res, next) {
     try {
-      const postId = req.params.id;
-
-      const post = await Post.findByPk(postId);
-      if (!post) {
-        return res
-          .status(404)
-          .json({ message: `Post id ${postId} not found` });
-      }
-
       if (!req.file) {
         return res.status(400).json({ message: "File is required" });
       }
@@ -64,11 +46,8 @@ class PostController {
         public_id: fileNameWithoutExtension,
       });
 
-      await post.update({ coverUrl: result.secure_url });
-      console.log(result);
-
       res.status(200).json({
-        message: "Image successfully updated",
+        cover_url: result.secure_url,
       });
     } catch (err) {
       next(err);

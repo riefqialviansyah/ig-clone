@@ -15,3 +15,14 @@ export const failEvent = (message) => {
     text: message,
   });
 };
+
+export const waitEvent = (waiting, message) => {
+  if (waiting) {
+    Swal.fire({
+      title: "Loading...",
+      text: message,
+      icon: "info",
+      showConfirmButton: false,
+    });
+  }
+};

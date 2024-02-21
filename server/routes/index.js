@@ -10,7 +10,6 @@ const upload = multer({
   storage: multer.memoryStorage(),
 });
 
-
 router.get("/", (req, res) => {
   res.json({
     message: "Welcome to KOPI (Kumpulan Orang Paling Imut) API",
@@ -27,11 +26,10 @@ router.use(authentication);
 router.post("/post", PostController.create);
 router.get("/post", PostController.showAllPost);
 router.patch(
-  "/post/:id/cover-url",
+  "/post/cover-url",
   upload.single("image"),
   PostController.updatePostCoverUrlById
 );
-
 
 // buat routingan sisanya untuk like, comment, gett all post, get all coment by PostId
 
