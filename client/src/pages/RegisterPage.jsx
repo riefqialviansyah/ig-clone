@@ -24,7 +24,9 @@ export default function RegisterPage() {
           type="password"
           placeholder="Password"
         />
-        <button>Sign Up</button>
+        <Link to="/">
+          <button>Sign Up</button>
+        </Link>
       </form>
 
       <p>

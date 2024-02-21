@@ -1,26 +1,31 @@
 // router.jsx
 
-import { createBrowserRouter } from "react-router-dom";
-import LayoutPage from "./pages/LayoutPage";
-import HomePage from "./pages/HomePage";
-import LoginPage from "./pages/LoginPage";
-import RegisterPage from "./pages/RegisterPage";
+import { createBrowserRouter } from 'react-router-dom';
+import LayoutPage from './pages/LayoutPage';
+import HomePage from './pages/HomePage';
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
+import CreatePostPage from './pages/CreatePost';
 
 const router = createBrowserRouter([
   {
     element: <LayoutPage />,
     children: [
       {
-        path: "/",
+        path: '/',
         element: <HomePage />,
       },
       {
-        path: "/register",
+        path: '/register',
         element: <RegisterPage />,
       },
       {
-        path: "/login",
+        path: '/login',
         element: <LoginPage />,
+      },
+      {
+        path: '/create-post',
+        element: <CreatePostPage />,
       },
     ],
   },

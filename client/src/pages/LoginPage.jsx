@@ -24,7 +24,9 @@ export default function LoginPage() {
         placeholder="Password"
         className="login-input"
       />
-      <button className="login-button">Log in</button>
+      <Link to="/">
+        <button className="login-button">Login</button>
+      </Link>
 
       <p>
         Don't have an account? <Link to="/register">Register here</Link>
