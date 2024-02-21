@@ -30,6 +30,7 @@ router.patch(
   upload.single("image"),
   PostController.updatePostCoverUrlById
 );
+router.get("/post/coment/:postId", PostController.getComentByPostId);
 
 // buat routingan sisanya untuk like, comment, gett all post, get all coment by PostId
 
