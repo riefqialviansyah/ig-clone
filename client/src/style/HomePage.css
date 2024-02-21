@@ -2,6 +2,7 @@
 
 .home-page {
   max-width: 800px;
+  position: relative;
   margin: 0 auto;
 }
 
@@ -75,4 +76,16 @@
 
 .button-login:hover {
   background-color: #0082cc;
+}
+
+.online-user {
+  position: absolute;
+  width: 150px;
+  background-color: grey;
+  color: white;
+  border: 1px solid black;
+  padding: 5px;
+  border-radius: 10px;
+  left: -30px;
+  top: 100px;
 }

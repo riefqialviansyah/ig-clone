@@ -1,5 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 import "../style/PostCard.css";
+
+import socket from "../socket";
+const baseUrl = import.meta.env.VITE_BASE_URL;
 
 const PostCard = ({ post }) => {
   const [likes, setLikes] = useState(0);
@@ -13,7 +17,11 @@ const PostCard = ({ post }) => {
 
   const handleComment = () => {
     if (newComment.trim() !== "") {
-      setComments([...comments, newComment]);
+      socket.emit("coment:send", {
+        access_token: localStorage.access_token,
+        message: newComment,
+        postId: post.id,
+      });
       setNewComment("");
     }
   };
@@ -27,6 +35,35 @@ const PostCard = ({ post }) => {
   const toggleCommentForm = () => {
     setShowCommentForm(!showCommentForm);
   };
+
+  const getComents = async () => {
+    try {
+      const { data } = await axios({
+        method: "get",
+        url: baseUrl + `/post/coment/${post.id}`,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        },
+      });
+
+      setComments(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getComents();
+
+    socket.on("coment:update", (updatedComents) => {
+      setComments(updatedComents);
+      // console.log(updatedComents);
+    });
+
+    return () => {
+      socket.off("coment:update");
+    };
+  }, []);
 
   return (
     <div className="post-card">
@@ -53,7 +90,7 @@ const PostCard = ({ post }) => {
                   value={newComment}
                   onChange={(e) => setNewComment(e.target.value)}
                 />
-                <button onClick={handleComment}>Post</button>
+                <button onClick={handleComment}>Send</button>
               </div>
             )}
           </div>
@@ -66,14 +103,19 @@ const PostCard = ({ post }) => {
         <div className="post-description">{post.description}</div>
         <div className="comments-section">
           <ul>
-            {comments.map((comment, index) => (
-              <li key={index}>
-                {comment}
-                <button onClick={() => handleDeleteComment(index)}>
-                  Delete
-                </button>
-              </li>
-            ))}
+            {comments.map((comment, index) => {
+              if (comment.postId == post.id) {
+                return (
+                  <li key={index}>
+                    <strong> {comment.User.username}</strong> {": "}
+                    {comment.message}
+                    {/* <button onClick={() => handleDeleteComment(index)}>
+                      Delete
+                    </button> */}
+                  </li>
+                );
+              }
+            })}
             {showCommentForm && <li className="comment-input"></li>}
           </ul>
         </div>

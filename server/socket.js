@@ -46,8 +46,20 @@ const getComents = async () => {
   }
 };
 
+let DB = {
+  lastCount: 0,
+  onlineUser: [],
+};
+
 io.on("connection", (socket) => {
-  console.log("Someone connect with id:", socket.id);
+  if (socket.handshake.auth.username) {
+    DB.onlineUser.push({
+      socketId: socket.id,
+      username: socket.handshake.auth.username,
+    });
+  }
+  console.log(DB.onlineUser);
+  io.emit("users:online", DB.onlineUser);
 
   socket.on("post:info", async (message) => {
     if (message == "Success create post") {
@@ -69,6 +81,17 @@ io.on("connection", (socket) => {
 
     const coments = await getComents();
     io.emit("coment:update", coments);
+  });
+
+  socket.on("disconnect", () => {
+    DB.onlineUser = DB.onlineUser.filter((el) => {
+      if (el.socketId == socket.id) {
+        console.log(`${el.username} disconnected`);
+      }
+      return el.socketId != socket.id;
+    });
+    io.emit("users:online", DB.onlineUser);
+    console.log(DB.onlineUser);
   });
 });
 

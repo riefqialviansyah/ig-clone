@@ -8,6 +8,7 @@ import "../style/HomePage.css";
 
 // socket.io
 import socket from "../socket";
+import ListUserOnline from "../components/ListUserOnline";
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
 
@@ -52,7 +53,9 @@ export default function HomePage() {
         <header className="header">
           <Navbar />
         </header>
-
+        <div className="online-user">
+          <ListUserOnline />
+        </div>
         <main className="main-content">
           {posts &&
             posts.map((el) => {
