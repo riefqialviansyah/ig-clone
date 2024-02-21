@@ -20,12 +20,14 @@ This endpoint is used to retrieve information about the API.
 
 ### Response
 
-- Status: 200 OK
+_200 - OK_
 - Body:
+```json
   {
   "message": "Welcome to KOPI (Kumpulan Orang Paling Imut) API",
   "description": "This is web API for group project Hactiv8 RMT45 Phase2"
   }
+  ```
 
 ## `POST` /register
 
@@ -36,21 +38,40 @@ This endpoint is used to register a new user in the system.
 - Method: POST
 - Endpoint: /register
 - Body:
-
+```json
 {
 "username": "string",
 "email": "string",
 "password": "string"
 }
-
+```
 ### Response
 
-- Status: 201 Created
+_201 - Created_
 - Body:
-
+```json
 {
 "message": "User has been created"
 }
+```
+
+_400 - Bad Request_
+```json
+
+{
+    "message": "Email is required"
+}
+OR
+{
+    "message": "Password is required"
+}
+
+_500 - Internal Server Error_
+``` json
+{
+  "message": "Internal server error"
+}
+```
 
 ## `POST` /login
 
@@ -61,21 +82,48 @@ This endpoint is used for the user login process into the system.
 - Method: POST
 - Endpoint: /login
 - Body:
-
+```json
 {
 "email": "string",
 "password": "string"
 }
-
+```
 ### Response
 
-- Status: 200 OK
+_200 - OK_
 - Body:
-
+```json
 {
 "message": "succes login",
 "access_token": "<access_token>"
 }
+```
+
+_400 - Bad Request_
+```json
+
+{
+    "message": "Email is required"
+}
+OR
+{
+    "message": "Password is required"
+}
+
+_401 - Unauthorized_
+
+```json
+{
+  "message": "Invalid email or password"
+}
+```
+
+_500 - Internal Server Error_
+``` json
+{
+  "message": "Internal server error"
+}
+```
 
 ## `POST` /post
 
@@ -86,31 +134,47 @@ This endpoint is used to create a new post.
 - Method: POST
 - Endpoint: /post
 - Body:
-
+```json
 {
-"userId": 1,
-"imageUrl": "https://images.unsplash.com/photo-1499114794761-d2743d4eb6f2?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-"likes": 0,
-"description": "kuak, uak, wak, kang, kwebek"
+  "userId": "string",
+  "imageUrl": "string",
+  "likes": "integer",
+  "description": "string"
 }
-
+```
 ### Response
 
-- Status: 201 Created
+ _201 - Created_
 - Body:
-
+```json
 {
-"success": true,
-"post": {
-"id": 3,
-"userId": 1,
-"imageUrl": "https://res.cloudinary.com/de8km9ts7/image/upload/v1708474326/posts/gw6vc51tddvgedljstxb.jpg",
-"likes": 0,
-"description": "kuak, uak, wak, kang, kwebek",
-"updatedAt": "2024-02-21T00:20:15.330Z",
-"createdAt": "2024-02-21T00:20:15.330Z"
+  "success": true,
+  "post": {
+    "userId": "string",
+    "imageUrl": "string",
+    "likes": "number",
+    "description": "string",
+    "createdAt": "string",
+    "updatedAt": "string"
+  }
 }
+```
+_400 - Bad Request_
+
+```json
+{
+    "message": "File is required"
 }
+```
+
+_500 - Internal Server Error_
+
+```json
+{
+  "message": "Internal server error"
+}
+```
+
 
 ## `GET` /post
 
@@ -123,53 +187,75 @@ This endpoint is used to retrieve all posts.
 
 ### Response
 
-- Status: 200 OK
+ _200 - OK_
 - Body:
-
-"message": "Success Get Data All Post",
-"data": [
+```json
 {
-"id": 1,
-"userId": 1,
-"imageUrl": "https://res.cloudinary.com/de8km9ts7/image/upload/v1708473804/posts/v5mipl1nqikvw1txhju3.jpg",
-"likes": 0,
-"description": "kuak, uak, wak, kang, kwebek",
-"createdAt": "2024-02-21T00:11:32.948Z",
-"updatedAt": "2024-02-21T00:11:32.948Z"
+  "message": "Success Get Data All Post",
+  "data": [
+    {
+      "userId": "string",
+      "imageUrl": "string",
+      "likes": "integer",
+      "description": "string",
+      "createdAt": "string",
+      "updatedAt": "string"
+    },
+    {
+      "userId": "string",
+      "imageUrl": "string",
+      "likes": "integer",
+      "description": "string",
+      "createdAt": "string",
+      "updatedAt": "string"
+    }
+  ]
 }
+```
 
-      ## `PATCH` /post/:id/cover-url
+_500 - Internal Server Error_
+```json
+{
+  "message": "Internal server error"
+}
+```
+
+## `PATCH` /post/:id/cover-url
 
 This endpoint is used to update the cover URL of a post by ID.
 
-### Request
-
-- Method: PATCH
-- Endpoint: /post/:id/cover-url
-- Parameters:
-id: ID of the post to be updated
-- Body: Form data with key image containing the image file to be uploaded as the new cover URL.
-### Response
-- Status: 200 OK
+### Request Body
 - Body:
-
+```json
+{
+  "image": "file"
+}
+```
+### Responses
+_200 - OK_
+```json
 {
   "message": "Image successfully updated"
 }
+```
+_400 - Bad Request_
+```json
+{
+    "message": "File is required"
+}
+```
 
+_404 - Not Found_
+```json
+{
+    "message": "Post id <post_id> not found"
+}
+```
 
-### Error Handling
-Here are some error responses
+_500 - Internal Server Error_
 
-- Status Code: 400 Bad Request
-
-- Body: { "message": "Email is required" }
-Status Code: 401 Unauthorized
-
-- Body: { "message": "Invalid Token, Please login first" }
-Status Code: 404 Not Found
-
-- Body: { "message": "Post id {postId} not found" }
-- Status Code: 500 Internal Server Error
-
-- Body: { "message": "Internal server error" }
+```json
+{
+  "message": "Internal server error"
+}
+```
