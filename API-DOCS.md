@@ -139,7 +139,7 @@ This endpoint is used to retrieve all posts.
 "description": "kuak, uak, wak, kang, kwebek",
 "createdAt": "2024-02-21T00:11:32.948Z",
 "updatedAt": "2024-02-21T00:11:32.948Z"
-}];
+}]
 ```
 ## `PATCH` /post/:id/cover-url
 
