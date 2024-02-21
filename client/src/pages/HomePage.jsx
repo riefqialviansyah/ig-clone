@@ -1,45 +1,63 @@
-import { Link, useNavigate } from "react-router-dom"; // Assuming you use React Router
-import "../style/HomePage.css";
-import { successEvent } from "../helpers/alerts";
-import socket from "../socket";
+import { useEffect, useState } from "react";
 import PostCard from "../components/PostCard";
+import Navbar from "../components/Navbar";
+import axios from "axios";
+
+// style
+import "../style/HomePage.css";
+
+// socket.io
+import socket from "../socket";
+
+const baseUrl = import.meta.env.VITE_BASE_URL;
 
 export default function HomePage() {
-  const navigate = useNavigate();
+  const [posts, setPosts] = useState(null);
 
-  const handleLogout = () => {
-    localStorage.clear();
-    successEvent("You are logout now");
-    navigate("/login");
+  const fetchPost = async () => {
+    try {
+      const { data } = await axios({
+        method: "get",
+        url: baseUrl + "/post",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        },
+      });
+      setPosts(data);
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+  useEffect(() => {
+    fetchPost();
+    socket.auth = {
+      username: localStorage.username,
+    };
+
+    socket.connect();
+
+    socket.on("post:update", (newPosts) => {
+      setPosts(newPosts);
+    });
+
+    return () => {
+      socket.off("post:update");
+    };
+  }, []);
 
   return (
     <>
       <div className="home-page">
         <header className="header">
-          <img src="/instagram.png" alt="Instagram Logo" className="logo" />
-          <div className="nav-icons">
-            {/* "Create Post" button */}
-            <Link to="/create-post" className="nav-icon">
-              <img
-                src="/create-post.png"
-                alt="Create Post"
-                className="create-post-icon"
-              />
-            </Link>
-
-            <button
-              onClick={handleLogout}
-              className="nav-icon log-out"
-              style={{ textDecoration: "none", color: "inherit" }}
-            >
-              Log Out
-            </button>
-          </div>
+          <Navbar />
         </header>
 
         <main className="main-content">
-          <PostCard/>
+          {posts &&
+            posts.map((el) => {
+              return <PostCard key={el.id} post={el} />;
+            })}
         </main>
 
         <footer className="footer">{/* Add the footer content here */}</footer>

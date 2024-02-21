@@ -1,4 +1,4 @@
-const { Post } = require("../models/index");
+const { Post, User } = require("../models/index");
 const cloudinary = require("../utils/cloudinary");
 
 class PostController {
@@ -21,7 +21,12 @@ class PostController {
 
   static async showAllPost(req, res, next) {
     try {
-      const post = await Post.findAll({});
+      const post = await Post.findAll({
+        include: {
+          model: User,
+        },
+        order: [["updatedAt", "desc"]],
+      });
       res.status(200).json(post);
     } catch (error) {
       next(error);
