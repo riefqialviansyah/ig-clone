@@ -1,3 +1,4 @@
+
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -5,6 +6,7 @@ import "../style/CreatePost.css";
 import { successEvent, waitEvent } from "../helpers/alerts";
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
+
 
 export default function CreatePost() {
   const [photo, setPhoto] = useState("/add-image.png");
@@ -73,10 +75,14 @@ export default function CreatePost() {
   return (
     <div className="create-post-page">
       <header className="header">
-        <img src="/instagram.png" alt="Instagram Logo" className="logo" />
-        <button onClick={cancelPost} className="nav-icon cancel-button">
-          Cancel
-        </button>
+
+      <img src="/instagram.jpg" alt="Instagram Logo" className="logo" />
+      <button className="nav-icon cancel-button">
+  <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
+    Cancel
+  </Link>
+</button>
+
       </header>
 
       <main className="main-content">

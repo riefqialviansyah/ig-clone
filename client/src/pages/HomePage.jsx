@@ -16,12 +16,13 @@ export default function HomePage() {
                 className="create-post-icon"
               />
             </Link>
-            <button
-              className="nav-icon log-out"
-              onClick={() => console.log("Log Out clicked")}
-            >
-              Log Out
-            </button>
+
+            <button className="nav-icon log-out">
+            <Link to="/login" style={{ textDecoration: 'none', color: 'inherit' }}>
+            Log Out
+        </Link>
+</button>
+
           </div>
         </header>
 
