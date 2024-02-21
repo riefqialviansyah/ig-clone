@@ -1,4 +1,4 @@
-const { Post, User } = require("../models/index");
+const { Post, User, Coment } = require("../models/index");
 const cloudinary = require("../utils/cloudinary");
 
 class PostController {
@@ -55,6 +55,21 @@ class PostController {
         cover_url: result.secure_url,
       });
     } catch (err) {
+      next(err);
+    }
+  }
+
+  static async getComentByPostId(req, res, next) {
+    const { postId } = req.params;
+    try {
+      const coments = await Coment.findAll({
+        where: { postId },
+        include: {
+          model: User,
+        },
+      });
+      res.status(200).json(coments);
+    } catch (error) {
       next(err);
     }
   }
