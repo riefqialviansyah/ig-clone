@@ -1,5 +1,4 @@
-const { Post, sequelize } = require("../models/index");
-const { post } = require("../routes");
+const { Post } = require("../models/index");
 const cloudinary = require("../utils/cloudinary");
 
 class PostController {
@@ -21,6 +20,7 @@ class PostController {
         likes,
         description,
       });
+
       res.status(201).json({ success: true, post: newPost });
     } catch (error) {
       next(error);
@@ -28,8 +28,7 @@ class PostController {
   }
   static async showAllPost(req, res, next) {
     try {
-      const post = await Post.findAll({
-      });
+      const post = await Post.findAll({});
       res
         .status(200)
         .json({ message: "Success Get Data All Post", data: post });
