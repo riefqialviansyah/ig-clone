@@ -1,0 +1,45 @@
+/* PostCard.css */
+.post-card {
+    width: 100%;
+    max-width: 600px;
+    margin: 20px auto;
+    border: 1px solid #dbdbdb;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+  }
+  
+  .post-image {
+    width: 100%;
+    height: auto;
+  }
+  
+  .post-interactions {
+    padding: 10px;
+  }
+  
+  .like-comment-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  
+  .like-button,
+  .comment-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #262626;
+    font-weight: bold;
+  }
+  
+  .comments-section {
+    max-height: 200px;
+    overflow-y: auto;
+  }
+  
+  .comment {
+    margin: 5px 0;
+    font-size: 14px;
+  }
+  

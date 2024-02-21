@@ -26,7 +26,12 @@ export default function HomePage() {
                 className="create-post-icon"
               />
             </Link>
-            <button className="nav-icon log-out" onClick={handleLogout}>
+
+            <button
+              onClick={handleLogout}
+              className="nav-icon log-out"
+              style={{ textDecoration: "none", color: "inherit" }}
+            >
               Log Out
             </button>
           </div>
