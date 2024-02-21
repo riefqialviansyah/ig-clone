@@ -1,6 +1,6 @@
 const { comparePassword } = require("../helpers/hash");
 const { signToken } = require("../helpers/token");
-const {  User, sequelize } = require("../models/index");
+const { User, sequelize } = require("../models/index");
 
 class UserController {
   static async register(req, res, next) {
@@ -20,7 +20,7 @@ class UserController {
         throw { name: "EmailRequired" };
       }
       if (!password) {
-        throw { name: "PasswordRequired" };
+        throw { name: "PassRequired" };
       }
       const user = await User.findOne({ where: { email } });
       if (!user) {
@@ -32,7 +32,13 @@ class UserController {
       }
       const access_token = signToken({ id: user.id });
 
-      res.status(200).json({ message: "succes login ", access_token });
+      res
+        .status(200)
+        .json({
+          message: "succes login ",
+          username: user.username,
+          access_token,
+        });
     } catch (error) {
       next(error);
     }

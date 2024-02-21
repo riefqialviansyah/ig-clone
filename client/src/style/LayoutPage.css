@@ -1,0 +1,13 @@
+/* LayoutPage.css */
+
+.layout-page {
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* Set tinggi 100% dari viewport height */
+  }
+  
+  .main-content {
+    flex-grow: 1; /* Biarkan kontennya mengisi ruang yang tersedia */
+    overflow-y: auto; /* Tambahkan overflow jika kontennya panjang */
+  }
+  

@@ -17,7 +17,7 @@ const errHandler = (err, req, res, next) => {
     case "FileIsRequired":
       res.status(400).json({ message: err.message });
       break;
-      case "NotFound":
+    case "NotFound":
       res.status(404).json({ message: err.message });
       break;
     case "value":
