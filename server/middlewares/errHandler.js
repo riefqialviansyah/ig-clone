@@ -4,20 +4,21 @@ const errHandler = (err, req, res, next) => {
     case "SequelizeUniqueConstraintError":
       res.status(400).json({ message: err.errors[0].message });
       break;
-      case "EmailRequired":
+    case "EmailRequired":
       res.status(400).json({ message: "Email is required" });
       break;
     case "PassRequired":
       res.status(400).json({ message: "Password is required" });
       break;
-      case "FileIsRequired":
-        res.status(400).json({ message: err.message})
-        break;
-        case "InvalidToken":
+    case "InvalidToken":
     case "JsonWebTokenError":
-      res
-      .status(401)
-      .json({ message: "Invalid Token, Please login first" });
+      res.status(401).json({ message: "Invalid Token, Please login first" });
+      break;
+    case "FileIsRequired":
+      res.status(400).json({ message: err.message });
+      break;
+      case "NotFound":
+      res.status(404).json({ message: err.message });
       break;
     case "value":
       break;
