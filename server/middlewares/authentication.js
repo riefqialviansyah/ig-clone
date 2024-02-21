@@ -1,5 +1,4 @@
 const { User } = require("../models");
-const { Post } = require("../models/index");
 const { verifyToken } = require("../helpers/token");
 
 const authentication = async (req, res, next) => {

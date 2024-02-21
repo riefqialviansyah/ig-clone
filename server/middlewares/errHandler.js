@@ -10,6 +10,9 @@ const errHandler = (err, req, res, next) => {
     case "PassRequired":
       res.status(400).json({ message: "Password is required" });
       break;
+      case "FileIsRequired":
+        res.status(400).json({ message: err.message})
+        break;
     case "value":
       break;
     default:
