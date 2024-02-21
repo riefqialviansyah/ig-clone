@@ -1,4 +1,8 @@
+// HomePage.js
+
 import React from 'react';
+import { Link } from 'react-router-dom'; // Assuming you use React Router
+import CreatePost from './CreatePost';
 import '../style/HomePage.css';
 
 export default function HomePage() {
@@ -6,23 +10,27 @@ export default function HomePage() {
     <>
       <div className="home-page">
         <header className="header">
-          <div className="logo">Instagram</div>
-          <div className="search-bar">
-            <input type="text" placeholder="Search" />
-          </div>
+        <img src="/instagram.jpg" alt="Instagram Logo" className="logo" />
           <div className="nav-icons">
-            {/* Tambahkan ikon-ikon navigasi di sini */}
+            {/* "Create Post" button */}
+            <Link to="/create-post" className="nav-icon">
+              <img src="/create-post.png" alt="Create Post" className="create-post-icon" />
+            </Link>
+            <button className="nav-icon log-out" onClick={() => console.log('Log Out clicked')}>
+              Log Out
+            </button>
           </div>
-        </header> p0-[]
+        </header>
 
         <main className="main-content">
-          {/* Tambahkan konten beranda di sini */}
+          {/* Add the main content here */}
         </main>
 
         <footer className="footer">
-          {/* Tambahkan bagian footer di sini */}
+          {/* Add the footer content here */}
         </footer>
       </div>
     </>
   );
 }
+

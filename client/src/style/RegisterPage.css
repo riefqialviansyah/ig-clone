@@ -1,7 +1,10 @@
 /* RegisterPage.css */
 
 body {
-  font-family: "Arial", sans-serif;
+
+  font-family: 'Arial', sans-serif;
+
+
   margin: 0;
   padding: 0;
   background-color: #fafafa;
@@ -19,18 +22,20 @@ body {
   background-color: #fff;
 }
 
+
 .signup img {
   width: 175px;
   height: 70px;
   margin-bottom: 20px;
 }
 
+
 .signup form {
   width: 100%;
 }
 
 .signup input {
-  width: 100%;
+  width: calc(99% - 20px); /* Adjusted width to account for padding */
   background-color: #fafafa;
   border: 1px solid #dbdbdb;
   border-radius: 3px;
@@ -46,7 +51,7 @@ body {
 }
 
 .signup button {
-  width: 100%;
+  width: calc(100% - 1px); /* Adjusted width to account for padding */
   padding: 10px;
   border-radius: 3px;
   border: 1px solid #0095f6;
