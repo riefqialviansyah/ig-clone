@@ -1,7 +1,17 @@
-import { Link } from "react-router-dom"; // Assuming you use React Router
+import { Link, useNavigate } from "react-router-dom"; // Assuming you use React Router
 import "../style/HomePage.css";
+import { successEvent } from "../helpers/alerts";
+import socket from "../socket";
 
 export default function HomePage() {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.clear();
+    successEvent("You are logout now");
+    navigate("/login");
+  };
+
   return (
     <>
       <div className="home-page">
@@ -17,12 +27,13 @@ export default function HomePage() {
               />
             </Link>
 
-            <button className="nav-icon log-out">
-            <Link to="/login" style={{ textDecoration: 'none', color: 'inherit' }}>
-            Log Out
-        </Link>
-</button>
-
+            <button
+              onClick={handleLogout}
+              className="nav-icon log-out"
+              style={{ textDecoration: "none", color: "inherit" }}
+            >
+              Log Out
+            </button>
           </div>
         </header>
 
