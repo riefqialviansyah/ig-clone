@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom"; // Assuming you use React 
 import "../style/HomePage.css";
 import { successEvent } from "../helpers/alerts";
 import socket from "../socket";
+import PostCard from "../components/PostCard";
 
 export default function HomePage() {
   const navigate = useNavigate();
@@ -37,7 +38,9 @@ export default function HomePage() {
           </div>
         </header>
 
-        <main className="main-content">{/* Add the main content here */}</main>
+        <main className="main-content">
+          <PostCard/>
+        </main>
 
         <footer className="footer">{/* Add the footer content here */}</footer>
       </div>

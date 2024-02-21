@@ -1,6 +1,6 @@
 
 import { useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../style/CreatePost.css";
 import { successEvent, waitEvent } from "../helpers/alerts";
@@ -76,7 +76,7 @@ export default function CreatePost() {
     <div className="create-post-page">
       <header className="header">
 
-      <img src="/instagram.jpg" alt="Instagram Logo" className="logo" />
+      <img src="/instagram.png" alt="Instagram Logo" className="logo" />
       <button className="nav-icon cancel-button">
   <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
     Cancel
