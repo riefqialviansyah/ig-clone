@@ -13,7 +13,7 @@ app.use(cors());
 
 // pake router
 app.use(require("./routes"));
-console.log(process.env);
+
 // pakai error handler di folder middlewares
 app.use(errHandler);
 
