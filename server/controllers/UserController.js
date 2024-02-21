@@ -32,7 +32,13 @@ class UserController {
       }
       const access_token = signToken({ id: user.id });
 
-      res.status(200).json({ message: "succes login ", access_token });
+      res
+        .status(200)
+        .json({
+          message: "succes login ",
+          username: user.username,
+          access_token,
+        });
     } catch (error) {
       next(error);
     }

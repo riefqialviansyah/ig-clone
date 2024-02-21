@@ -25,9 +25,10 @@ export default function LoginPage() {
         url: baseUrl + "/login",
         data: inputUser,
       });
-      console.log(data);
+      localStorage.setItem("username", data.username);
+      localStorage.setItem("access_token", data.access_token);
       successEvent("Success login");
-      navigate("/login");
+      navigate("/");
     } catch (error) {
       console.log(error);
       const message = error.response.data.message;
@@ -59,7 +60,7 @@ export default function LoginPage() {
       </button>
 
       <p>
-        Don't have an account? <Link to="/register">Register here</Link>
+        {"Don't"} have an account? <Link to="/register">Register here</Link>
       </p>
     </div>
   );
