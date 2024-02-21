@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import '../style/CreatePost.css';
+import { Link } from 'react-router-dom';
 
 export default function CreatePost() {
   const [photo, setPhoto] = useState(null);
@@ -31,9 +32,11 @@ export default function CreatePost() {
     <div className="create-post-page">
       <header className="header">
       <img src="/instagram.jpg" alt="Instagram Logo" className="logo" />
-        <button className="nav-icon cancel-button" onClick={() => console.log('Cancel clicked')}>
-          Cancel
-        </button>
+      <button className="nav-icon cancel-button">
+  <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
+    Cancel
+  </Link>
+</button>
       </header>
 
       <main className="main-content">
