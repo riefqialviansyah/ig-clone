@@ -5,6 +5,11 @@ const router = express.Router();
 const UserController = require("../controllers/UserController");
 const authentication = require("../middlewares/authentication");
 const PostController = require("../controllers/PostController");
+const multer = require("multer");
+const upload = multer({
+  storage: multer.memoryStorage(),
+});
+
 
 router.get("/", (req, res) => {
   res.json({
@@ -21,6 +26,12 @@ router.use(authentication);
 
 router.post("/post", PostController.create);
 router.get("/post", PostController.showAllPost);
+router.patch(
+  "/post/:id/cover-url",
+  upload.single("image"),
+  PostController.updatePostCoverUrlById
+);
+
 
 // buat routingan sisanya untuk like, comment, gett all post, get all coment by PostId
 
