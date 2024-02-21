@@ -152,7 +152,7 @@ This endpoint is used to create a new post.
   "post": {
     "userId": "string",
     "imageUrl": "string",
-    "likes": "number",
+    "likes": "integer",
     "description": "string",
     "createdAt": "string",
     "updatedAt": "string"
