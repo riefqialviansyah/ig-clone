@@ -26,6 +26,17 @@ class PostController {
       next(error);
     }
   }
+  static async showAllPost(req, res, next) {
+    try {
+      const post = await Post.findAll({
+      });
+      res
+        .status(200)
+        .json({ message: "Success Get Data All Post", data: post });
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 module.exports = PostController;

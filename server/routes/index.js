@@ -20,6 +20,7 @@ router.post("/login", UserController.login);
 router.use(authentication);
 
 router.post("/post", PostController.create);
+router.get("/post", PostController.showAllPost);
 
 // buat routingan sisanya untuk like, comment, gett all post, get all coment by PostId
 
