@@ -1,6 +1,7 @@
 "use strict";
 const { Model } = require("sequelize");
 const { hashPassword } = require("../helpers/hash");
+
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -53,9 +54,6 @@ module.exports = (sequelize, DataTypes) => {
       password: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: {
-          msg: "Password must be unique",
-        },
         validate: {
           notNull: {
             msg: "Password is required",
