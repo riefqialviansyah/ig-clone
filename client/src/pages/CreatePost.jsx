@@ -1,7 +1,6 @@
 import { useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { successEvent, waitEvent } from "../helpers/alerts";
-import axios from "axios";
 import "../style/CreatePost.css";
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
@@ -74,12 +73,10 @@ export default function CreatePost() {
     <div className="create-post-page">
       <header className="header">
         <img src="/instagram.png" alt="Instagram Logo" className="logo" />
-        <button
-          className="nav-icon log-out"
-          onClick={backToHome}
-          style={{ textDecoration: "none", color: "inherit" }}
-        >
-          Back
+        <button className="nav-icon cancel-button">
+          <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
+            Cancel
+          </Link>
         </button>
       </header>
 
