@@ -1,0 +1,46 @@
+/* HomePage.css */
+
+.home-page {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .search-bar {
+    flex-grow: 1;
+    margin: 0 16px;
+  }
+  
+  .search-bar input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .nav-icons {
+    display: flex;
+    gap: 16px;
+  }
+  
+  .main-content {
+    padding: 16px;
+  }
+  
+  .footer {
+    padding: 16px;
+    border-top: 1px solid #ddd;
+  }
+  
