@@ -5,7 +5,7 @@ import { OnlineContext } from "../pages/LayoutPage";
 export default function ListUserOnline() {
   // pakai contex
   const data = useContext(OnlineContext);
-  console.log(data, "+++++");
+  // console.log(data, "+++++");
   return (
     <>
       <h6>

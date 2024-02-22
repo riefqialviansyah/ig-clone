@@ -38,8 +38,8 @@ export default function HomePage() {
 
     socket.connect();
 
-    socket.on("post:update", (newPosts) => {
-      setPosts(newPosts);
+    socket.on("post-update", (newData) => {
+      setPosts(newData);
     });
 
     return () => {
@@ -59,7 +59,7 @@ export default function HomePage() {
         <main className="main-content">
           {posts &&
             posts.map((el) => {
-              return <PostCard key={el.id} post={el} />;
+              return <PostCard key={el.id} post={el} setPosts={setPosts} />;
             })}
         </main>
 

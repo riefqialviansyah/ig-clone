@@ -10,10 +10,13 @@
   background-color: #fff;
 }
 
+.gambar {
+  text-align: center;
+}
+
 .post-image {
   width: 300px;
   border-radius: 10px;
-  border: 1px solid black;
   height: auto;
 }
 
@@ -98,7 +101,14 @@
   word-break: break-word;
 }
 
-.comments-section li button {
+.comments-section li {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+  color: #8e8e8e;
+}
+.comments-section li strong {
   background: none;
   border: none;
   cursor: pointer;

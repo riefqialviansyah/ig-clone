@@ -3,16 +3,32 @@ import axios from "axios";
 import "../style/PostCard.css";
 
 import socket from "../socket";
+import { failEvent, successEvent } from "../helpers/alerts";
 const baseUrl = import.meta.env.VITE_BASE_URL;
 
-const PostCard = ({ post }) => {
+const PostCard = ({ post, setPosts }) => {
   const [likes, setLikes] = useState(0);
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
   const [showCommentForm, setShowCommentForm] = useState(false);
 
-  const handleLike = () => {
-    setLikes(likes + 1);
+  const handleLike = async () => {
+    try {
+      const { data } = await axios({
+        method: "get",
+        url: baseUrl + `/post/likes/${post.id}`,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        },
+      });
+
+      successEvent("You like this post");
+      socket.emit("post-likes", "Success like post");
+    } catch (error) {
+      console.log(error);
+      const message = error.response.data.message;
+      failEvent(message);
+    }
   };
 
   const handleComment = () => {
@@ -60,8 +76,13 @@ const PostCard = ({ post }) => {
       // console.log(updatedComents);
     });
 
+    socket.on("post:update-likes", (newPosts) => {
+      setPosts(newPosts);
+    });
+
     return () => {
       socket.off("coment:update");
+      socket.off("post:update");
     };
   }, []);
 
@@ -71,18 +92,20 @@ const PostCard = ({ post }) => {
         <h6>
           <span className="badge text-bg-info mt-3">{post.User.username}</span>
         </h6>
-        <img src={post.imageUrl} alt="Post" className="post-image" />
+        <div className="gambar">
+          <img src={post.imageUrl} alt="Post" className="post-image" />
+        </div>
 
         <div className="post-actions">
           <button className="like-button" onClick={handleLike}>
             <img src="/heart.svg" alt="Like" className="icon" />
-            <span className="likes-count">{likes}</span>
+            <span className="likes-count">{post.likes}</span>
           </button>
           <div className="comment-section">
             <button className="comment-button" onClick={toggleCommentForm}>
               <img src="/comment.svg" alt="Comment" className="icon" />
             </button>
-            {showCommentForm && (
+            {true && (
               <div className="comment-form">
                 <input
                   type="text"
@@ -107,11 +130,8 @@ const PostCard = ({ post }) => {
               if (comment.postId == post.id) {
                 return (
                   <li key={index}>
-                    <strong> {comment.User.username}</strong> {": "}
+                    <strong> {comment.User.username}</strong> {" : "}
                     {comment.message}
-                    {/* <button onClick={() => handleDeleteComment(index)}>
-                      Delete
-                    </button> */}
                   </li>
                 );
               }

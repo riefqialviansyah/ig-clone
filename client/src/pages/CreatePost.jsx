@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { successEvent, waitEvent } from "../helpers/alerts";
+import { failEvent, successEvent, waitEvent } from "../helpers/alerts";
 import axios from "axios";
 
 // import socket.io
@@ -42,7 +42,9 @@ export default function CreatePost() {
       waitEvent(false);
       successEvent("Success to upload your image");
     } catch (error) {
+      waitEvent(false);
       console.log(error);
+      failEvent("Error upload image file");
     }
   };
 
@@ -68,7 +70,7 @@ export default function CreatePost() {
         },
       });
 
-      socket.emit("post:info", "Success create post");
+      socket.emit("post-info", "Success create post");
       successEvent("Succes create post");
       navigate("/");
     } catch (error) {
