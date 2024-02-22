@@ -25,6 +25,7 @@ class PostController {
       const post = await Post.findAll({
         include: {
           model: User,
+          attributes: { exclude: ["password"] },
         },
         order: [["createdAt", "desc"]],
       });
@@ -67,6 +68,7 @@ class PostController {
         where: { postId },
         include: {
           model: User,
+          attributes: { exclude: ["password"] },
         },
         order: [["createdAt", "asc"]],
       });

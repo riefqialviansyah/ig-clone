@@ -14,7 +14,7 @@ const errHandler = (err, req, res, next) => {
       res.status(400).json({ message: err.message });
       break;
     case "Invalid User":
-      res.status(401).json({ message: "Invalid username/password" });
+      res.status(401).json({ message: "Invalid email or password" });
     case "InvalidToken":
     case "JsonWebTokenError":
       res.status(401).json({ message: "Invalid Token, Please login first" });
