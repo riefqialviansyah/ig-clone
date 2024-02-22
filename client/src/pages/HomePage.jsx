@@ -8,6 +8,7 @@ import "../style/HomePage.css";
 
 // socket.io
 import socket from "../socket";
+import ListUserOnline from "../components/ListUserOnline";
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
 
@@ -37,8 +38,8 @@ export default function HomePage() {
 
     socket.connect();
 
-    socket.on("post:update", (newPosts) => {
-      setPosts(newPosts);
+    socket.on("post-update", (newData) => {
+      setPosts(newData);
     });
 
     return () => {
@@ -52,11 +53,13 @@ export default function HomePage() {
         <header className="header">
           <Navbar />
         </header>
-
+        <div className="online-user">
+          <ListUserOnline />
+        </div>
         <main className="main-content">
           {posts &&
             posts.map((el) => {
-              return <PostCard key={el.id} post={el} />;
+              return <PostCard key={el.id} post={el} setPosts={setPosts} />;
             })}
         </main>
 

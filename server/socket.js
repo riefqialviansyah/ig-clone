@@ -17,7 +17,7 @@ const getPostData = async () => {
       include: {
         model: User,
       },
-      order: [["updatedAt", "desc"]],
+      order: [["createdAt", "desc"]],
     });
     return post;
   } catch (error) {
@@ -39,6 +39,7 @@ const getComents = async () => {
       include: {
         model: User,
       },
+      order: [["createdAt", "asc"]],
     });
     return coments;
   } catch (error) {
@@ -46,13 +47,33 @@ const getComents = async () => {
   }
 };
 
-io.on("connection", (socket) => {
-  console.log("Someone connect with id:", socket.id);
+let DB = {
+  lastCount: 0,
+  onlineUser: [],
+};
 
-  socket.on("post:info", async (message) => {
+io.on("connection", (socket) => {
+  if (socket.handshake.auth.username) {
+    DB.onlineUser.push({
+      socketId: socket.id,
+      username: socket.handshake.auth.username,
+    });
+  }
+  console.log(DB.onlineUser);
+  io.emit("users:online", DB.onlineUser);
+
+  socket.on("post-info", async (message) => {
     if (message == "Success create post") {
       const posts = await getPostData();
-      socket.broadcast.emit("post:update", posts);
+      socket.broadcast.emit("post-update", posts);
+    }
+  });
+
+  socket.on("post-likes", async (message) => {
+    if (message == "Success like post") {
+      const posts = await getPostData();
+      console.log(posts, "<<<<<<<");
+      io.emit("post:update-likes", posts);
     }
   });
 
@@ -69,6 +90,17 @@ io.on("connection", (socket) => {
 
     const coments = await getComents();
     io.emit("coment:update", coments);
+  });
+
+  socket.on("disconnect", () => {
+    DB.onlineUser = DB.onlineUser.filter((el) => {
+      if (el.socketId == socket.id) {
+        console.log(`${el.username} disconnected`);
+      }
+      return el.socketId != socket.id;
+    });
+    io.emit("users:online", DB.onlineUser);
+    console.log(DB.onlineUser);
   });
 });
 

@@ -1,4 +1,5 @@
-const { Post, User, Coment } = require("../models/index");
+const { Op } = require("sequelize");
+const { Post, User, Coment, Like } = require("../models/index");
 const cloudinary = require("../utils/cloudinary");
 
 class PostController {
@@ -25,7 +26,7 @@ class PostController {
         include: {
           model: User,
         },
-        order: [["updatedAt", "desc"]],
+        order: [["createdAt", "desc"]],
       });
       res.status(200).json(post);
     } catch (error) {
@@ -67,10 +68,41 @@ class PostController {
         include: {
           model: User,
         },
+        order: [["createdAt", "asc"]],
       });
       res.status(200).json(coments);
     } catch (error) {
       next(err);
+    }
+  }
+
+  static async addLike(req, res, next) {
+    const userId = req.user.id;
+    const { postId } = req.params;
+
+    try {
+      const oldLike = await Like.findOne({
+        where: {
+          [Op.and]: [{ postId }, { userId }],
+        },
+      });
+
+      if (oldLike) {
+        throw {
+          name: "LikesValidation",
+          message: "You only allow likes this post once",
+        };
+      }
+
+      const like = await Like.create({ postId, userId });
+
+      if (like) {
+        await Post.increment({ likes: 1 }, { where: { id: postId } });
+      }
+
+      res.status(200).json({ message: "Success to like this post" });
+    } catch (error) {
+      next(error);
     }
   }
 }

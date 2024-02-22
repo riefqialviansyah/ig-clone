@@ -10,6 +10,9 @@ const errHandler = (err, req, res, next) => {
     case "PassRequired":
       res.status(400).json({ message: "Password is required" });
       break;
+    case "LikesValidation":
+      res.status(400).json({ message: err.message });
+      break;
     case "Invalid User":
       res.status(401).json({ message: "Invalid username/password" });
     case "InvalidToken":

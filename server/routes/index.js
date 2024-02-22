@@ -31,6 +31,7 @@ router.patch(
   PostController.updatePostCoverUrlById
 );
 router.get("/post/coment/:postId", PostController.getComentByPostId);
+router.get("/post/likes/:postId", PostController.addLike);
 
 // buat routingan sisanya untuk like, comment, gett all post, get all coment by PostId
 
