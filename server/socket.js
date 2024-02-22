@@ -7,7 +7,7 @@ const { verifyToken } = require("./helpers/token");
 
 const io = new Server(httpServer, {
   cors: {
-    origin: "http://localhost:5173",
+    origin: process.env.SOCKET_ORIGIN_URL,
   },
 });
 
