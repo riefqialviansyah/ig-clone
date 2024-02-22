@@ -1,8 +1,13 @@
 # Ig-clone App Api Docs
 
+## LINK
+
+- `https://ig-clone.riefqialviansyah.com/`
+- `https://ig-clone-f166b.web.app/`
+
 ## Available Endpoints
 
-- `get` /
+- `get` / `ok`
 - `post` /register
 - `post` /login
 - `post` /post
@@ -21,13 +26,15 @@ This endpoint is used to retrieve information about the API.
 ### Response
 
 _200 - OK_
+
 - Body:
+
 ```json
-  {
+{
   "message": "Welcome to KOPI (Kumpulan Orang Paling Imut) API",
   "description": "This is web API for group project Hactiv8 RMT45 Phase2"
-  }
-  ```
+}
+```
 
 ## `POST` /register
 
@@ -38,28 +45,49 @@ This endpoint is used to register a new user in the system.
 - Method: POST
 - Endpoint: /register
 - Body:
+
 ```json
 {
-"username": "string",
-"email": "string",
-"password": "string"
+  "username": "string",
+  "email": "string",
+  "password": "string"
 }
 ```
+
 ### Response
 
 _201 - Created_
+
 - Body:
+
 ```json
 {
-"message": "User has been created"
+  "message": "User has been created"
 }
 ```
 
 _400 - Bad Request_
-```json
+
+````json
 
 {
+    "message": "Username must be unique"
+}
+OR
+{
+    "message": "Username is required"
+}
+OR
+{
+    "message": "Email must be unique"
+}
+OR
+{
     "message": "Email is required"
+}
+OR
+{
+    "message": "Invalid email format"
 }
 OR
 {
@@ -71,7 +99,7 @@ _500 - Internal Server Error_
 {
   "message": "Internal server error"
 }
-```
+````
 
 ## `POST` /login
 
@@ -82,24 +110,30 @@ This endpoint is used for the user login process into the system.
 - Method: POST
 - Endpoint: /login
 - Body:
+
 ```json
 {
-"email": "string",
-"password": "string"
+  "email": "string",
+  "password": "string"
 }
 ```
+
 ### Response
 
 _200 - OK_
+
 - Body:
+
 ```json
 {
-"message": "succes login",
-"access_token": "<access_token>"
+  "message": "succes login",
+  "username": "string",
+  "access_token": "<access_token>"
 }
 ```
 
 _400 - Bad Request_
+
 ```json
 
 {
@@ -109,6 +143,7 @@ OR
 {
     "message": "Password is required"
 }
+```
 
 _401 - Unauthorized_
 
@@ -119,7 +154,8 @@ _401 - Unauthorized_
 ```
 
 _500 - Internal Server Error_
-``` json
+
+```json
 {
   "message": "Internal server error"
 }
@@ -133,37 +169,49 @@ This endpoint is used to create a new post.
 
 - Method: POST
 - Endpoint: /post
-- Body:
+
+- Header:
+
 ```json
 {
-  "userId": "string",
+  "Authorization": "Bearer <access_token>"
+}
+```
+
+- Body:
+
+```json
+{
   "imageUrl": "string",
-  "likes": "integer",
   "description": "string"
 }
 ```
+
 ### Response
 
- _201 - Created_
+_201 - Created_
+
 - Body:
+
 ```json
 {
-  "success": true,
-  "post": {
-    "userId": "string",
-    "imageUrl": "string",
-    "likes": "number",
-    "description": "string",
-    "createdAt": "string",
-    "updatedAt": "string"
-  }
+  "success": "Success to create post"
 }
 ```
+
 _400 - Bad Request_
 
 ```json
 {
-    "message": "File is required"
+  "message": "userId Is Required"
+}
+OR
+{
+  "message": "imageUrl is required"
+}
+OR
+{
+  "message": "description is required"
 }
 ```
 
@@ -174,7 +222,6 @@ _500 - Internal Server Error_
   "message": "Internal server error"
 }
 ```
-
 
 ## `GET` /post
 
@@ -185,70 +232,88 @@ This endpoint is used to retrieve all posts.
 - Method: GET
 - Endpoint: /post
 
-### Response
+- Header:
 
- _200 - OK_
-- Body:
 ```json
 {
-  "message": "Success Get Data All Post",
-  "data": [
-    {
-      "userId": "string",
-      "imageUrl": "string",
-      "likes": "integer",
-      "description": "string",
-      "createdAt": "string",
-      "updatedAt": "string"
-    },
-    {
-      "userId": "string",
-      "imageUrl": "string",
-      "likes": "integer",
-      "description": "string",
-      "createdAt": "string",
-      "updatedAt": "string"
-    }
-  ]
+  "Authorization": "Bearer <access_token>"
 }
 ```
 
+### Response
+
+_200 - OK_
+
+- Body:
+
+```json
+[
+  {
+    "id": "integer",
+    "userId": "integer",
+    "imageUrl": "string",
+    "likes": "integer",
+    "description": "text",
+    "createdAt": "string",
+    "updatedAt": "string",
+    "User": {
+      "id": "integer",
+      "username": "string",
+      "email": "string",
+      "createdAt": "string",
+      "updatedAt": "string"
+    }
+  },
+  ...
+]
+```
+
 _500 - Internal Server Error_
+
 ```json
 {
   "message": "Internal server error"
 }
 ```
 
-## `PATCH` /post/:id/cover-url
+## `PATCH` /post/cover-url
 
-This endpoint is used to update the cover URL of a post by ID.
+This endpoint is used to upload image to 3rd party API.
 
-### Request Body
+### Request
+
+- Header:
+
+```json
+{
+  "Authorization": "Bearer <access_token>",
+  "Content-Type": "multipart/form-data"
+}
+```
+
 - Body:
+
 ```json
 {
   "image": "file"
 }
 ```
+
 ### Responses
+
 _200 - OK_
+
 ```json
 {
-  "message": "Image successfully updated"
-}
-```
-_400 - Bad Request_
-```json
-{
-    "message": "File is required"
+  "cover_url": "string"
 }
 ```
 
-_404 - Not Found_
+_400 - Bad Request_
+
 ```json
 {
-    "message": "Post id <post_id> not found"
+  "message": "File is required"
 }
 ```
 
@@ -257,5 +322,104 @@ _500 - Internal Server Error_
 ```json
 {
   "message": "Internal server error"
+}
+```
+
+## `GET` /post/coment/:postId
+
+This endpoint is used to get coment on post.
+
+### Request
+
+- Header:
+
+```json
+{
+  "Authorization": "Bearer <access_token>"
+}
+```
+
+### Response
+
+_200 - OK_
+
+```json
+[
+  {
+    "id": "integer",
+    "message": "string",
+    "userId": "integer",
+    "postId": "integer",
+    "createdAt": "string",
+    "updatedAt": "string",
+    "User": {
+      "id": "integer",
+      "username": "string",
+      "email": "string",
+      "createdAt": "string",
+      "updatedAt": "string"
+    }
+  },
+  ...
+]
+```
+
+_500 - Internal Server Error_
+
+```json
+{
+  "message": "Internal server error"
+}
+```
+
+## `GET` /post/likes/:postId
+
+This endpoint is used to add like to post.
+
+### Request
+
+- Header:
+
+```json
+{
+  "Authorization": "Bearer <access_token>"
+}
+```
+
+### Response
+
+_200 - OK_
+
+```json
+{
+  "message": "Success to like this post"
+}
+```
+
+_400 - Bad Request_
+
+```json
+{
+  "message": "You only allow likes this post once"
+}
+```
+
+_500 - Internal Server Error_
+
+```json
+{
+  "message": "Internal server error"
+}
+```
+
+## GLobal Error
+
+### Response
+
+- _401 - Unauthorized_
+
+```json
+{
+  "message": "Invalid Token, Please login first"
 }
 ```
