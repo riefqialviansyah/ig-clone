@@ -17,7 +17,7 @@ const getPostData = async () => {
       include: {
         model: User,
       },
-      order: [["updatedAt", "desc"]],
+      order: [["createdAt", "desc"]],
     });
     return post;
   } catch (error) {
@@ -39,6 +39,7 @@ const getComents = async () => {
       include: {
         model: User,
       },
+      order: [["createdAt", "asc"]],
     });
     return coments;
   } catch (error) {
@@ -61,10 +62,18 @@ io.on("connection", (socket) => {
   console.log(DB.onlineUser);
   io.emit("users:online", DB.onlineUser);
 
-  socket.on("post:info", async (message) => {
+  socket.on("post-info", async (message) => {
     if (message == "Success create post") {
       const posts = await getPostData();
-      socket.broadcast.emit("post:update", posts);
+      socket.broadcast.emit("post-update", posts);
+    }
+  });
+
+  socket.on("post-likes", async (message) => {
+    if (message == "Success like post") {
+      const posts = await getPostData();
+      console.log(posts, "<<<<<<<");
+      io.emit("post:update-likes", posts);
     }
   });
 
