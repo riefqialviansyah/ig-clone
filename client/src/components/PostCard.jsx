@@ -90,7 +90,12 @@ const PostCard = ({ post, setPosts }) => {
     <div className="post-card">
       <div>
         <h6>
-          <span className="badge text-bg-info mt-3">{post.User.username}</span>
+          <span
+            className="badge text-bg-info mt-3"
+            style={{ marginLeft: "20px" }}
+          >
+            {post.User.username}
+          </span>
         </h6>
         <div className="gambar">
           <img src={post.imageUrl} alt="Post" className="post-image" />
@@ -118,13 +123,25 @@ const PostCard = ({ post, setPosts }) => {
             )}
           </div>
         </div>
-        <span className="badge text-bg-secondary">
+        <span
+          className="badge text-bg-secondary"
+          style={{ marginLeft: "20px" }}
+        >
           {new Date(post.createdAt).toLocaleDateString("id-ID", {
             dateStyle: "full",
           })}
         </span>
-        <div className="post-description">{post.description}</div>
-        <div className="comments-section">
+        <div
+          className="post-description"
+          style={{
+            paddingLeft: "20px",
+            paddingRight: "20px",
+            fontSize: "13px",
+          }}
+        >
+          {post.description}
+        </div>
+        <div className="comments-section" style={{ paddingLeft: "20px" }}>
           <ul>
             {comments.map((comment, index) => {
               if (comment.postId == post.id) {

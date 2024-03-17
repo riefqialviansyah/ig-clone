@@ -5,10 +5,9 @@ import { OnlineContext } from "../pages/LayoutPage";
 export default function ListUserOnline() {
   // pakai contex
   const data = useContext(OnlineContext);
-  // console.log(data, "+++++");
   return (
     <>
-      <h6>
+      <h6 style={{ marginTop: "10px" }}>
         <span className="badge text-bg-info">Online user:</span>
       </h6>
       <ul>
