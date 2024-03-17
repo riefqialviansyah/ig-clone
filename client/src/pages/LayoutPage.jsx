@@ -19,6 +19,8 @@ export default function LayoutPage() {
       socket.off("users:online");
     };
   }, []);
+
+  console.log(onlineUsers, "<<<<<<<<<<<<<<<<<<<<");
   return (
     <div className="layout-page">
       <div className="main-content">

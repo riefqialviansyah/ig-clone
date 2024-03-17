@@ -80,12 +80,15 @@
 
 .online-user {
   position: absolute;
-  width: 150px;
+  /* width: 150px; */
+  margin-left: -15px;
   background-color: white;
   color: black;
-  border: 1px solid black;
-  padding: 5px;
+  border: 1px solid #ddd;
+  padding-right: 10px;
+  padding-left: 5px;
   border-radius: 10px;
   left: -30px;
   top: 100px;
+  box-sizing: border-box;
 }

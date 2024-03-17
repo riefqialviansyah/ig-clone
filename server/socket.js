@@ -53,13 +53,14 @@ let DB = {
 };
 
 io.on("connection", (socket) => {
+  console.log(socket.id, "<<<<<< ada yang connect");
   if (socket.handshake.auth.username) {
     DB.onlineUser.push({
       socketId: socket.id,
       username: socket.handshake.auth.username,
     });
   }
-  console.log(DB.onlineUser);
+  // console.log(DB.onlineUser, "<<<<<<<<<<< onlien user");
   io.emit("users:online", DB.onlineUser);
 
   socket.on("post-info", async (message) => {

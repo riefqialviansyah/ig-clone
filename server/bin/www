@@ -1,5 +1,5 @@
 const httpServer = require("../socket");
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3005;
 
 httpServer.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
